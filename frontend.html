@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake AI Voice Detection</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            
+            background: url('18129294.jpg') center center no-repeat;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center align content horizontally */
+            text-align: center;
+            background: linear-gradient(135deg, #7992a8, #bca4be);
+            overflow-x: hidden;
+            justify-content: center; /* Center align content vertically */
+            
+        }
+
+        /* Home Page */
+        .home-page {
+            height: 100vh;
+    width: 100vw;
+    background: url('18129294.jpg') center center no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 0 20px;
+    animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .scroll-button {
+            background-color: #e6675c;
+            color: white;
+            padding: 18px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .scroll-button:hover {
+            background-color: #FF5733;
+            transform: scale(1.1);
+        }
+
+        /* Main Section */
+        .main-section {
+            
+            background-color: #333;
+            padding: 50px 20px;
+            width: 100%;
+            max-width: 800px; /* Max width for centering content */
+            margin: 0 auto; /* Center horizontally */
+            text-align: center;
+        }
+
+        .upload-container {
+            
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            margin-top: 50px;
+            transition: transform 0.3s ease;
+            margin: 0 auto; /* Center horizontally */
+        }
+
+        .upload-container:hover {
+            transform: translateY(-10px);
+        }
+
+        .upload-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .upload-button {
+            background-color: #e6675c;
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #ee7a70;
+            transform: scale(1.05);
+        }
+
+        .file-name {
+            color: #d3d3d3;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .result-container {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            margin: 0 auto; /* Center horizontally */
+        }
+
+        .result-container h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #FF6F61;
+        }
+
+        .result-container p {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .loading {
+            font-size: 1.5rem;
+            color: #FFCC00;
+        }
+
+        .footer {
+            font-size: 1rem;
+            color: #d3d3d3;
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px 0;
+            background-color: #222;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<!-- Home Page Section -->
+<div class="home-page">
+    <h1>Deepfake AI Voice Detection</h1>
+    <h2>Detect Deepfake Audio with Cutting-Edge AI Technology</h2>
+    <p>Upload your audio file, and let our advanced AI system determine whether it's a deepfake or authentic voice.</p>
+    <button class="scroll-button" onclick="scrollToMain()">Get Started</button>
+</div>
+
+<!-- Main Section (Detection Page) -->
+<div id="mainSection" class="main-section">
+    <h2>Upload Your Voice File for Detection</h2>
+
+    <!-- File Upload Section -->
+    <div class="upload-container">
+        <h2>Upload Your Voice File</h2>
+
+        <div class="file-upload-area" id="fileUploadArea">
+            <p>Drag & Drop your file here</p>
+            <input type="file" id="fileInput" accept="audio/*" style="display: none;">
+        </div>
+
+        <p id="fileName" class="file-name">No file chosen</p>
+        <button class="upload-button" onclick="document.getElementById('fileInput').click()">Choose File</button>
+        <button class="upload-button" onclick="uploadFile()">Upload & Detect</button>
+    </div>
+
+    <!-- Result Section -->
+    <div class="result-container" id="resultContainer">
+        <h3>Detection Result</h3>
+        <p id="resultText" class="loading">Analyzing...</p>
+    </div>
+</div>
+
+<div class="footer">
+    <p ><center>Powered by AI & Deepfake Detection Technology</center></p>
+</div>
+
+<script>
+    // Smooth Scroll to Main Detection Section
+    function scrollToMain() {
+        document.getElementById('mainSection').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+
+    // Handle the file upload and "detect" deepfake (fake processing for demonstration)
+  
+
+    function uploadFile() {
+    const fileInput = document.getElementById('fileInput');
+    const resultContainer = document.getElementById('resultContainer');
+    const resultText = document.getElementById('resultText');
+
+    if (!fileInput.files.length) {
+        alert('Please select a file to upload.');
+        return;
+    }
+
+    resultContainer.style.display = 'block';
+    resultText.textContent = 'Analyzing...';
+
+    const formData = new FormData();
+    formData.append("audio", fileInput.files[0]);
+
+    fetch("http://127.0.0.1:5000/predict", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            resultText.textContent = `Error: ${data.error}`;
+        } else {
+            resultText.textContent = `This voice is detected as ${data.label}.\nConfidence: ${data.confidence}%`;
+        }
+    })
+    .catch(err => {
+        resultText.textContent = "Something went wrong!";
+        console.error(err);
+    });
+}
+
+
+    // Handle file input change event to display selected file name
+    document.getElementById('fileInput').addEventListener('change', function() {
+        const fileName = document.getElementById('fileName');
+        if (this.files.length > 0) {
+            fileName.textContent = this.files[0].name;
+        } else {
+            fileName.textContent = 'No file chosen';
+        }
+    });
+</script>
+
+</body>
+</html>
